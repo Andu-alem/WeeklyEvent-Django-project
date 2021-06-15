@@ -1,0 +1,1 @@
+# WeeklyEvent-Django-project
