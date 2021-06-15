@@ -1,0 +1,48 @@
+{% extends 'weekEvent/base.html' %}
+
+
+{% block titleblock %}Weekly Event{% endblock %}
+
+{% block maincontent %}
+    <div class="row bg-white">
+        <div class="col-md-2 border-right d-none d-md-block">
+            <ul class="list-group mt-3">
+                <a href="{% url 'weekEvent:index' 'tomorrow' %}" class="text-dark font-weight-bold">Tommorow Events</a>
+                <a href="{% url 'weekEvent:index' 'thisweek' %}" class="text-dark">This Week Events</a>
+                <a href="{% url 'weekEvent:index' 'nexweek' %}" class="text-dark">Next Week Events</a>
+                <a href="{% url 'weekEvent:index' 'thismonth' %}" class="text-dark">This Month Events</a>
+                <a href="{% url 'weekEvent:index' 'nextmonth' %}" class="text-dark">Next Month Events</a>
+                <a href="{% url 'weekEvent:index' 'past' %}" class="text-dark">Past Events</a>
+            </ul>
+        </div>
+        <div class="col-md-10 row">
+            {% if event_list %}
+                {% for data in event_list %}
+                    <div class="col-12 col-md-5 border p-2 m-2">
+                        <h5 class="border-bottom bg-light text-center">{{ data.title }}</h5>
+                        {% if data.image_set.all %}     
+                            <img src="{{ data.image_set.all.0.image.url }}" class="w-100" style="height: 150px;" alt="No Image">        
+                        {% endif %}
+                        <p class="text-monospace border-bottom" style="white-space: pre-line;">
+                            {{ data.text|truncatechars:48 }}
+                            <a href="{% url 'weekEvent:event_detail' data.id %}">Read more</a>
+                        </p>                     
+                        {% comment %}
+                        {% for image in data.image_set.all %}                  
+                            <img src="{{ image.image.url }}" class="w-100" style="height: 200px;" alt="No Image">                    
+                        {% endfor %}
+                        {% endcomment %}
+                        <span class="font-italic">
+                            Event Happens on : {{ data.event_date|date:"D d M Y" }}
+                        </span>
+                    </div>
+                {% endfor %}
+            {% else %}
+                    <div class="">
+                        <h3 class="text-warning">No data found </h3>
+                    </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock%}
+

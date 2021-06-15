@@ -1,0 +1,34 @@
+{% extends 'weekEvent/base.html' %}
+{% block header%}
+{% endblock %}
+{% block maincontent %}
+    <div class="row bg-white">
+        <div class="col-sm-2 bg-light"></div>
+        <div class="col-sm-8">
+            <h2 class="border-bottom text-center pt-3">{{ event_detail.title}}</h2>
+            <span class="font-italic font-weight-bold">Event Date {{ event_detail.event_date }}</span>
+            <div>
+                <p style="white-space: pre-line;">{{ event_detail.text }}</p>
+            </div>
+            <div class="row">
+                {% if event_detail.image_set.all %}
+                    {% for image in event_detail.image_set.all %}  
+                        <div class="col-sm-4 mb-2">
+                            <a href="{{ image.image.url }}">                     
+                                <img src="{{ image.image.url }}" alt="No image" style="height: 250px;" class="w-100">
+                            </a>
+                            <a href="{{ image.image.url }}" download>
+                                    <button class="btn btn-default">Download Image</button>
+                            </a>
+                        </div> 
+                       
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <span class="font-italic">Posted Date {{ event_detail.posted_date }}</span>
+        </div>
+        <div class="col-sm-2 bg-light">
+
+        </div>
+    </div>
+{% endblock %}

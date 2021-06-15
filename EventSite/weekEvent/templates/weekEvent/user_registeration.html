@@ -1,0 +1,65 @@
+{% extends 'weekEvent/base.html' %}
+{% block header %}{% endblock%}
+
+{% block maincontent %}
+    <div class="row border-top">
+        <div class="col-sm-2 bg-light">
+        </div>
+        <div class="col-sm-8 bg-white">
+            <h2 class="border-bottom text-center p-3">Create an account</h2>
+            <div class="form-group w-50 m-sm-auto">
+                <form method="post" id="form">
+                    {% csrf_token %}
+                    {% if form.error_dict %}
+                        <p class="error">Please correct the errors below.</p>
+                    {% endif %}
+                    {% if form.first_name.errors %}
+                    {{ form.first_name.html_error_list }}
+                    {% endif %}
+                    <label for="id_firstname">First Name: </label><br>
+                    {{ form.first_name }} <br>
+                    {% if form.last_name.errors %}
+                    {{ form.last_name.html_error_list }}
+                    {% endif %}
+                    <label for="id_lastname">Last Name: </label><br>
+                    {{ form.last_name }} <br>
+        
+                    {% if form.username.errors %}
+                        {{ form.username.errors }}
+                    {% endif %}
+                    <label for="id_username">Username: </label><br>
+                    {{ form.username }}
+                    {{ form.username.help_text }}<br>
+
+                    {% if form.email.errors %}
+                        {{ form.email.errors}}
+                    {% endif %}
+                    <label for="id_email">Email: </label><br>
+                    {{ form.email }} <br>
+        
+                    {% if form.password1.errors %}
+                        {{ form.password1.html_error_list }}
+                    {% endif %}
+                    <label for="id_password1">Password: </label><br>
+                    {{ form.password1 }}
+                    {{ form.password1.help_text }}<br>
+        
+                    {% if form.password2.errors %}
+                        {{ form.password2.html_error_list }}
+                    {% endif %}
+                    <label for="id_password2">Password (again): <br>
+                        {{ form.password2 }}<br>
+                    
+                    <input type="submit" value="Create the account"></label>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-2 bg-light"></div>
+    </div> 
+    <script>
+        var submitButton = $(':submit');
+        $('input[type != "submit"]').addClass('form-control');
+        submitButton.addClass('btn btn-primary');
+        $('.errorlist').addClass("text-danger");
+    </script>
+{% endblock%}

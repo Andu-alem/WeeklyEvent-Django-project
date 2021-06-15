@@ -1,0 +1,9 @@
+{% extends "weekEvent/base.html" %}
+{% block maincontent %}
+    <div>
+        {% for img in image_list %}
+            {{ img }}<br>
+        {% endfor %}
+        {{ data.text }}
+    </div> 
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "weekEvent/base.html" %}
+{% load static %}
+{% block header %}
+{% endblock %}
+{% block maincontent %}
+    <div class="row border-top">
+        <div class="col-sm-2 bg-light">
+        </div>
+        <div class="col-sm-8 bg-white">
+            <h2 class="border-bottom text-center p-3">Post Your Event Here</h2>
+            <div class="form-group w-50 m-sm-auto">
+                <form method="POST" enctype="multipart/form-data" id="form">
+                    {% csrf_token %}
+                    {{ form }}
+                    <br>
+                    {{ eventform.as_p }}
+                    <input type="submit" value="Post Event">
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-2 bg-light"></div>
+    </div>
+    <script type="text/javascript" src="{% static 'weekEvent/js/app.js' %}"></script>
+    <script type="text/javascript">
+        /*var inputfile = document.getElementsByTagName('input');
+        for(var f of inputfile){
+            f.setAttribute('class','form-control');
+        }*/
+    </script>
+{% endblock %}

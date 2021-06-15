@@ -1,0 +1,68 @@
+{% extends 'weekEvent/base.html' %}
+{% block header %}{% endblock%}
+
+{% block maincontent %}
+    {% if form.errors and not form.non_field_errors %}
+    <p class="errornote">
+    {% if form.errors.items|length == 1 %}"Please correct the error below."{% else %}"Please correct the errors below."{% endif %}
+    </p>
+    {% endif %}
+
+    {% if form.non_field_errors %}
+    {% for error in form.non_field_errors %}
+    <p class="errornote">
+        {{ error }}
+    </p>
+    {% endfor %}
+    {% endif %}
+    <div class="row border-top">
+            <div class="col-sm-2 bg-light">
+            </div>
+            <div class="col-sm-8 bg-white">
+                <h2 class="border-bottom text-center p-3">Login to your account</h2>
+                <div class="form-group w-50 m-sm-auto">
+                    {% if user.is_authenticated %}
+                    <p class="errornote">
+                        You are authenticated as {{ user.username }}, but are not authorized to
+                        access this page. Would you like to login to a different account?
+                    </p>
+                    {% endif %}
+                    <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
+                        <div class="form-row">
+                            {{ form.username.errors }}
+                            {{ form.username.label_tag }} {{ form.username }}
+                        </div>
+                        <div class="form-row">
+                            {{ form.password.errors }}
+                            {{ form.password.label_tag }} {{ form.password }}
+                            {% if next %}
+                            <input type="hidden" name="next" value="{{ next }}">
+                            {% else %}
+                            <input type="hidden" name="next" value="../">
+                            {% endif %}
+                        </div>
+                        {% url 'admin_password_reset' as password_reset_url %}
+                        {% if password_reset_url %}
+                        <div class="password-reset-link">
+                            <a href="{{ password_reset_url }}">'Forgotten your password or username?'</a>
+                        </div>
+                        {% endif %}
+                        <div class="submit-row">
+                            <label>&nbsp;</label><input type="submit" value="Log in">
+                        </div>
+                        <div class="p-3">
+                            <span>Not Registered yet? <a href="{% url 'weekEvent:register' %}">Register </a></span> 
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-2 bg-light"></div>
+        </div> 
+        
+    <script>
+        var submitButton = $(':submit');
+        $('input[type != "submit"]').addClass('form-control m-2');
+        submitButton.addClass('btn btn-primary');
+    </script>
+
+{% endblock%}
